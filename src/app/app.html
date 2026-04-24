@@ -13,12 +13,49 @@
 				<div class="col-md-2">
 					<input type="text" [(ngModel)]="listFilter">
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-4">
 					Filtrado por: {{ listFilter() }}
 				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary" (click)="abrirModal()">
+						Crear producto
+					</button>
+				
 			</div>
-		<div class="card border-primary mb-3 text-center">
-			<app-product-list [datos]="filteredProducts()"></app-product-list>
 		</div>
+	</div>
+
+	<br>
+		@if(isModalOpen()){
+		<app-modal-add (close)="cerrarModal()"></app-modal-add>
+		}
+	<br>
+		
+	<br>
+		<app-product-list 
+		[datos]="filteredProducts()"
+		(updatedProducts)="products.set($event)">
+	</app-product-list>
+
+	<br>
+	<div class="card card-body">
+		@if(weatherData()){
+			<h1 class="h4">
+				Datos del clima para {{ weatherData().name}}
+				@for (i of weatherData().weather; track $index){
+					<img src="http://openweathermap.org/img/w/{{ i.icon }}.png" 
+						alt="{{ i.description }}" 
+						width="100px"
+						height="100px">
+					{{ i.description }}
+				}
+			</h1>
+			<p>Ciudad: {{ weatherData().name }}</p>
+			<p>Latitud: {{ weatherData().coord.lat }}</p>
+			<p>Longitud: {{ weatherData().coord.lon }}</p>
+			<p>Temperatura: {{ weatherData().main.temp }}</p>
+			<p>Presión: {{ weatherData().main.pressure }}</p>
+			<p>Humedad: {{ weatherData().main.humidity }}</p>
+		}
 	</div>
 </div>

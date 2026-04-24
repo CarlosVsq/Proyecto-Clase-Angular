@@ -1,3 +1,4 @@
+<div class="card border-primary mb-3 text-center">
 <div class="card-header">Lista de Productos</div>
 			<div class="card-body text-primary">
 				<div class="table-responsive">
@@ -26,8 +27,8 @@
 							<tr>
 								<td>
 									@if (showImage) {
-										<img src="{{producto.imageUrl}}" 
-											alt="{{producto.productName}}" 
+										<img [src]="producto.imageUrl | defaultImage"
+											[title]="producto.productName | uppercase"
 											[style.width.px]="imageWidth"
 											[style.height.px]="imageHeight" 
 											[style.margin.px]="imageMargin">
@@ -35,9 +36,23 @@
 								</td>
 								<td>{{producto.productName}}</td>
 								<td>{{producto.productCode}}</td>
-								<td>{{producto.releaseDate}}</td>
+								<td>{{producto.releaseDate | date: 'dd-MM-yyyy'}}</td>
 								<td>{{producto.price}}</td>
-								<td>{{producto.starRating}}</td>
+								<!--<td>{{producto.starRating}}</td>-->
+								<td><app-star [rating]="producto.starRating"></app-star></td>
+								<td>
+									<button class="btn btn-success">
+										<i class="bi bi-eye"></i>Ver
+									</button>
+									&nbsp;
+									<button class="btn btn-warning" (click)="editProduct(producto.productId, producto)">
+										<i class="bi bi-pencil"></i>Editar
+									</button>
+									&nbsp;
+									<button class="btn btn-danger" (click)="deleteProduct(producto.productId)">
+										<i class="bi bi-trash"></i>Borrar
+									</button>
+								</td>
 							</tr>
 							}
 						</tbody>
@@ -47,3 +62,4 @@
 					}
 				</div>
 			</div>
+</div>
